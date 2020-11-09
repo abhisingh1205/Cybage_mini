@@ -8,6 +8,10 @@ $(document).ready(()=>{
     sessionStorage.setItem("blogit_userId","3");
     sessionStorage.setItem("blogit_userName","Rachel")
 
+
+    var current_userID=Number(sessionStorage.getItem("blogit_userId"))
+    var current_userName=sessionStorage.getItem("blogit_userName")
+
     // To GET ALL USERS
     $.ajax({
         url:"http://localhost:3333/users",
@@ -69,6 +73,7 @@ $(document).ready(()=>{
         success:(likes)=>{
             console.log(likes);
             var likes_on_post=0;
+            var liked_flag=0;
             for(let i=0;i < likes.length;i++)
             {
                 if(likes[i].postId == current_postId)
@@ -81,7 +86,35 @@ $(document).ready(()=>{
             $('<button class="btn-primary" id="likebtn">Like<button>').appendTo(".likes-container")
 
             $('#likebtn').click(()=>{
-                alert("Workinbg")
+                
+                var likes_array;
+                $.ajax({
+                    url:"http://localhost:3333/likes",
+                    type:"GET",
+                    success:(data)=>{
+                        likes_array=data
+                        
+                    }
+                })
+                console.log(likes_array);
+                
+                for(let i=0;i<likes_array.length;i++)
+                {
+                    if(likes[i].userName == current_userName)
+                    {
+                        liked_flag=1
+                        break
+                    }
+                }
+                if(liked_flag == 1)
+                {
+                    $("#likebtn").html("Unlike")
+                }
+                else
+                {
+                    $("#likebtn").html("Like")
+                }
+                
             })
             
         }
@@ -120,8 +153,8 @@ $(document).ready(()=>{
 
             $(".post-btn").click(()=>{
 
-                var current_userID=Number(sessionStorage.getItem("blogit_userId"))
-                var current_userName=sessionStorage.getItem("blogit_userName")
+                // var current_userID=Number(sessionStorage.getItem("blogit_userId"))
+                // var current_userName=sessionStorage.getItem("blogit_userName")
                 var curent_comment=$(".input-post-comment").val();
 
                 var comment_obj={postId:current_postId,userId:current_userID,userName:current_userName,comment:curent_comment}
