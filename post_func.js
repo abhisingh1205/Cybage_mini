@@ -10,7 +10,7 @@ $(document).ready(()=>{
 
     // To GET ALL USERS
     $.ajax({
-        url:"http://blog-it-api.herokuapp.com/users",
+        url:"http://localhost:3333/users",
         type:"GET",
         success:(users)=>{
             all_users_array=users
@@ -22,7 +22,7 @@ $(document).ready(()=>{
     
     // TO GET SINGLE PAGE POST DATA
     $.ajax({
-        url:"http://blog-it-api.herokuapp.com/posts?id=2",
+        url:"http://localhost:3333/posts?id=2",
         type:"GET",
         success:(post)=>{
 
@@ -61,9 +61,35 @@ $(document).ready(()=>{
             $('<p>'+ single_post_array.content +'</p>').appendTo(".post-container")
         }
     })
-    
+
+
     $.ajax({
-        url:"http://blog-it-api.herokuapp.com/comments",
+        url:"http://localhost:3333/likes",
+        type:"GET",
+        success:(likes)=>{
+            console.log(likes);
+            var likes_on_post=0;
+            for(let i=0;i < likes.length;i++)
+            {
+                if(likes[i].postId == current_postId)
+                {
+                    likes_on_post++
+                }
+            }
+
+            $('<h6>Likes '+likes_on_post+'</h6>').appendTo(".likes-container");
+            $('<button class="btn-primary" id="likebtn">Like<button>').appendTo(".likes-container")
+
+            $('#likebtn').click(()=>{
+                alert("Workinbg")
+            })
+            
+        }
+    })
+    
+    // TO GET ALL COMMENTS
+    $.ajax({
+        url:"http://localhost:3333/comments",
         type:"GET",
         success:(comments)=>{
             console.log(comments);
@@ -116,5 +142,7 @@ $(document).ready(()=>{
             
         }
     })
+
+    
 
 })

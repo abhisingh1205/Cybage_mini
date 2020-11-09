@@ -22,9 +22,10 @@
 
  .likes-container{
      position: relative;
-     height: 50px;
+     height: 60px;
      width:100px;
      margin: auto;
+     text-align: center;
      border: 2px solid rebeccapurple
  }
 
