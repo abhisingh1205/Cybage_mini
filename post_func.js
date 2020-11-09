@@ -73,7 +73,7 @@ $(document).ready(()=>{
         success:(likes)=>{
             console.log(likes);
             var likes_on_post=0;
-            var liked_flag=0;
+            var liked_flag=0
             for(let i=0;i < likes.length;i++)
             {
                 if(likes[i].postId == current_postId)
